@@ -1,8 +1,13 @@
-Can't find "mudos", ignoring old binaries.
-Try invoking the driver using the full pathname.
-System Error: init_addr_server: connect: 由于目标计算机积极拒绝，无法连接。
+----------------------------------------------------------------------------
+mymud (MudOS v22pre11) starting up on Linux - Wed Dec 18 12:10:30 2013
 
+
+Can't find "./driver", ignoring old binaries.
+Try invoking the driver using the full pathname.
+Connection to address server (localhost 3990) refused.
 Initializations complete.
 
-Accepting connections on port 8360.
-Accepting connections on port 8635.
+Accepting connections on port 4500.
+******** FATAL ERROR: Process interrupted
+MudOS driver attempting to exit gracefully.
+crash() in master called successfully.  Aborting.
