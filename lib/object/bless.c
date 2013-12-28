@@ -25,7 +25,7 @@ int send_time()
 
 string get_save_str()
 {
-    return sprintf("%s|%s|%d", author_name(), msg(), send_time());
+    return sprintf("%s;%s;%d", author_name(), msg(), send_time());
 }
 
 void load_from_savestr(string save_str)
@@ -34,7 +34,7 @@ void load_from_savestr(string save_str)
     string msg;
     int send_time;
 
-    sscanf(save_str, "%s|%s|%d", author_name, msg, send_time);
+    sscanf(save_str, "%s;%s;%d", author_name, msg, send_time);
 
     set("author_name", author_name);
     set("msg", msg);

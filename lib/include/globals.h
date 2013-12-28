@@ -6,8 +6,6 @@
 #define protected static
 
 
-#define PROTO_DELIMITER "|" // 协议中字段之间的分隔符
-
 
 // paths
 #define CMD_USER_PATH       "/cmds/user/"

@@ -1,13 +1,11 @@
-----------------------------------------------------------------------------
-mymud (MudOS v22pre11) starting up on Linux - Wed Dec 18 12:10:30 2013
-
-
-Can't find "./driver", ignoring old binaries.
+Can't find "mudos", ignoring old binaries.
 Try invoking the driver using the full pathname.
-Connection to address server (localhost 3990) refused.
+System Error: init_addr_server: connect: 由于目标计算机积极拒绝，无法连接。
+
 Initializations complete.
 
-Accepting connections on port 4500.
-******** FATAL ERROR: Process interrupted
-MudOS driver attempting to exit gracefully.
-crash() in master called successfully.  Aborting.
+Accepting connections on port 8360.
+Accepting connections on port 8635.
+get_user_data: read on fd 624
+System Error: get_user_data: read: 当文件已存在时，无法创建该文件。
+
