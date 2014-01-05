@@ -6,12 +6,14 @@ inherit F_SAVE;
 nosave float MAX_COUNT_PER_MIN = 100000; // 每分钟的总产出上限
 nosave float MAX_NUM_PER_USER_PER_MIN = 500; // 每个用户每分钟的产出上限
 nosave int RESET_DELAY_SEC = 300; // 重置可赠花数量的时间间隔（秒）
+nosave int SHOW_EFFECT_NEED_NUM = 5; // 每次显示特效所需新增的赠花数
 
 
 // 协议头
 nosave int PROTO_HEAD_SENT_INFO = 111101; // 赠花信息
 nosave int PROTO_HEAD_SEND_LIM_INFO = 111102; // 赠花限额
 nosave int PROTO_HEAD_SEND = 111103; // 赠送鲜花
+nosave int PROTO_HEAD_SHOW_EFFECT = 111199; // 显示鲜花特效
 
 
 nosave int last_reset_time = 0; // 上次广播重置的时间
@@ -148,7 +150,10 @@ private void query_sent_lim_info(object user)
 private void send_flower(object user, int num)
 {
     string sent_info = "";
+
+    string tell_users_info = "";
     string sent_total_info = "";
+    string show_effect_info = "";
 
     int remain_num = 0;
     int user_name = user->get_name();
@@ -192,7 +197,6 @@ private void send_flower(object user, int num)
         if (savedata_idx >= 0)
             user_sent_info_savedata[savedata_idx] = savedata;
     }
-
     save();
 
     sent_info = sprintf("%d;%d;%d\n", PROTO_HEAD_SENT_INFO, user_sent_info[user_name], sent_total);
@@ -200,7 +204,16 @@ private void send_flower(object user, int num)
 
     // 通知所有用户当前的赠花总数
     sent_total_info = sprintf("%d;%d;%d\n", PROTO_HEAD_SENT_INFO, -1, sent_total);
-    LOGIN_D->tell_users(sent_total_info);
+    tell_users_info += sent_total_info;
+
+    // 满足条件的话，显示鲜花特效
+    if (0 == sent_total % SHOW_EFFECT_NEED_NUM && sent_total > 0)
+    {
+        show_effect_info = sprintf("%d;1\n", PROTO_HEAD_SHOW_EFFECT);
+        tell_users_info += show_effect_info;
+    }
+
+    LOGIN_D->tell_users(tell_users_info);
 }
 
 int handle_protos(object user, string proto)
