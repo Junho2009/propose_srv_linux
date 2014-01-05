@@ -15,7 +15,7 @@ int total_page = 0;
 string *blesses = ({});
 
 
-string query_save_file();
+string query_save_file(); // 要在create()中成功调用restore，就必须在create()之前先声明本函数
 void blesses_broadcast(object* bless_list);
 
 
@@ -37,6 +37,12 @@ void add_bless(object user, string content)
     string bless_save_str;
     object tmp_bless;
 
+    if (0 == user->is_logined())
+    {
+        MSG_D->notify_user(user, "未登录，不能送祝福");
+        return;
+    }
+
     sscanf(content, "%s;%s", author_name, msg);
     bless = new(BLESS_OB);
     bless->init(author_name, msg, time());
@@ -48,13 +54,19 @@ void add_bless(object user, string content)
     total_page = ceil(count / BLESS_NUM_PER_PAGE);
 
     save();
-
-    LOGIN_D->tell_users(bless_save_str);
 }
 
 void query_bless_info(object user)
 {
-    string info = sprintf("%d;%d;%d\n", PROTO_SN_BLESS_INFO, count, total_page);
+    string info = "";
+
+    if (0 == user->is_logined())
+    {
+        MSG_D->notify_user(user, "未登录，不能请求祝福信息");
+        return;
+    }
+
+    info = sprintf("%d;%d;%d\n", PROTO_SN_BLESS_INFO, count, total_page);
     tell_object(user, info);
 }
 
@@ -66,6 +78,12 @@ void send_blesses(object user, int page)
     int begin_idx = 0;
     string bless_save_str = "";
     object bless = new(BLESS_OB);
+
+    if (0 == user->is_logined())
+    {
+        MSG_D->notify_user(user, "未登录，不能请求祝福列表");
+        return;
+    }
 
     if (page < 1 || page > total_page)
         return;
@@ -95,11 +113,6 @@ void blesses_broadcast(object* bless_list)
         broadcast_strlist += sprintf("%d;%s;%s;%d\n", 1314, bless->author_name(), bless->msg(), bless->send_time());
     }
     LOGIN_D->tell_users(broadcast_strlist);
-}
-
-string query_save_file()
-{
-    return COMMON_SAVE_PATH + "blesses";
 }
 
 int handle_protos(object user, string proto)
@@ -133,4 +146,9 @@ int handle_protos(object user, string proto)
     }
 
     return handleFlag;
+}
+
+string query_save_file()
+{
+    return COMMON_SAVE_PATH + "blesses";
 }

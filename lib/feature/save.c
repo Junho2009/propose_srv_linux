@@ -3,7 +3,7 @@ int save()
     string file;
 
     if (stringp(file = this_object()->query_save_file()))
-        return save_object(file,1);
+        return save_object(file, 1);
     else
         return 0;
 }

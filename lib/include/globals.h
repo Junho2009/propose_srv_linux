@@ -19,6 +19,7 @@
 
 // singletons
 #define CMD_D			"/singleton/cmdd"
+#define MSG_D           "/singleton/messaged"
 #define LOGIN_D			"/singleton/logind"
 #define BLESS_D         "/singleton/blessd"
 #define FLOWER_D        "/singleton/flowerd"
