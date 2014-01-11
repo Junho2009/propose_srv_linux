@@ -69,10 +69,8 @@ int is_logined()
 
 void net_dead()
 {
-	tell_object(this_object(), "你已经下线\n");
-
 	LOGIN_D->logout(this_object());
-	LOGIN_D->tell_users(sprintf("%s已经下线\n", get_name()));
+	//LOGIN_D->tell_users(sprintf("%s已经下线\n", get_name()));
 }
 
 string query_save_file()
