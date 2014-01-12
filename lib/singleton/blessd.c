@@ -37,6 +37,8 @@ void add_bless(object user, string content)
     string bless_save_str;
     object tmp_bless;
 
+    string bless_info = "";
+
     if (0 == user->is_logined())
     {
         MSG_D->notify_user(user, "未登录，不能送祝福");
@@ -54,6 +56,9 @@ void add_bless(object user, string content)
     total_page = ceil(count / BLESS_NUM_PER_PAGE);
 
     save();
+
+    bless_info = sprintf("%d;%d;%d\n", PROTO_SN_BLESS_INFO, count, total_page);
+    LOGIN_D->tell_users(bless_info);
 }
 
 void query_bless_info(object user)
@@ -70,10 +75,11 @@ void query_bless_info(object user)
     tell_object(user, info);
 }
 
-void send_blesses(object user, int page)
+void query_bless_list(object user, int page)
 {
     string proto = "";
     string content = "";
+
     int i = 0;
     int begin_idx = 0;
     string bless_save_str = "";
@@ -141,7 +147,7 @@ int handle_protos(object user, string proto)
     else if (PROTO_SN_BLESS_LIST == sn)
     {
         sscanf(content, "%d", page);
-        send_blesses(user, page);
+        query_bless_list(user, page);
         handleFlag = 1;
     }
 

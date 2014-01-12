@@ -6,8 +6,8 @@ inherit F_SAVE;
 nosave float MAX_COUNT_PER_MIN = 100000; // 每分钟的总产出上限
 nosave float MAX_NUM_PER_USER_PER_MIN = 500; // 每个用户每分钟的产出上限
 nosave int RESET_DELAY_SEC = 300; // 重置可赠花数量的时间间隔（秒）
-nosave int SHOW_EFFECT_NEED_NUM = 99; // 每次显示特效所需新增的赠花数
-nosave int SHOW_NOTICE_NEED_NUM_PER_USER = 36; // 公告某个用户已送花信息所需的新增赠花数
+nosave int SHOW_EFFECT_NEED_NUM = 36; // 每次显示特效所需新增的赠花数
+nosave int SHOW_NOTICE_NEED_NUM_PER_USER = 18; // 公告某个用户已送花信息所需的新增赠花数
 
 
 // 协议头
